@@ -471,6 +471,7 @@ let guests=JSON.parse(localStorage.getItem('grad_rsvp3')||'[]');
 
 function pick(v){
   sel=v;
+  document.getElementById('statusField').value = v;
   document.getElementById('by').className='ch'+(v==='yes'?' sy':'');
   document.getElementById('bm').className='ch'+(v==='maybe'?' sm':'');
   document.getElementById('bn').className='ch'+(v==='no'?' sn':'');
