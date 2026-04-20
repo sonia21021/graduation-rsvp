@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celebración de Graduación 🎓</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #2A1A12;
+  --surface: #331F14;
+  --card: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.1);
+  --lime: #C8F075;
+  --lime2: #A8D855;
+  --peach: #FFB085;
+  --pink: #FF8FAB;
+  --white: #FFF5EE;
+  --muted: rgba(255,245,238,0.55);
+  --radius: 16px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* warm orange-pink gradient body */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 20%, #C4541A 0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 80% 70%, #9B2B5A 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 60% 10%, #E8703A 0%, transparent 40%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* FLOATING ORBS HEADER */
+.orbs-header {
+  width: 100%;
+  height: 70px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(18px);
+  animation: drift linear infinite;
+}
+@keyframes drift {
+  0%   { transform: translateX(0) scale(1); }
+  50%  { transform: translateX(30px) scale(1.08); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+/* STAR ROW */
+.stars-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 1rem 0 0.2rem;
+  position: relative;
+  z-index: 1;
+}
+.star-line {
+  flex: 1;
+  max-width: 160px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,245,238,0.25), transparent);
+}
+.star {
+  width: 6px; height: 6px;
+  background: var(--peach);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.star.lg { width: 10px; height: 10px; background: var(--lime); }
+.star.pk { background: var(--pink); }
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 2rem 1.5rem 3rem;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,176,133,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 35% at 15% 85%, rgba(200,240,117,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 85% 70%, rgba(255,143,171,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.gems {
+  display: flex; justify-content: center; gap: 10px;
+  margin-bottom: 1.4rem;
+  opacity: 0; animation: rise 0.5s 0.1s ease forwards;
+}
+.gem {
+  width: 10px; height: 10px;
+  transform: rotate(45deg);
+}
+
+.eyebrow {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--peach);
+  margin-bottom: 1rem;
+  opacity: 0; animation: rise 0.5s 0.18s ease forwards;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 10vw, 6.5rem);
+  line-height: 0.95;
+  margin-bottom: 0.5rem;
+  opacity: 0; animation: rise 0.6s 0.28s ease forwards;
+}
+.h-gold  { color: var(--lime); }
+.h-green { color: var(--pink); }
+
+.hero-sub {
+  font-size: 1rem; color: var(--muted);
+  max-width: 420px; margin: 1rem auto 0; line-height: 1.65;
+  opacity: 0; animation: rise 0.5s 0.38s ease forwards;
+}
+
+/* MARQUEE */
+.tape {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  color: var(--white);
+  padding: 0.65rem 0;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  overflow: hidden; white-space: nowrap;
+  position: relative; z-index: 1;
+}
+.tape-inner { display: inline-block; animation: scroll 20s linear infinite; }
+@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* DETAILS */
+.details {
+  max-width: 620px; margin: 2.5rem auto 0;
+  padding: 0 1.25rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  opacity: 0; animation: rise 0.5s 0.42s ease forwards;
+  position: relative; z-index: 1;
+}
+.dc {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.2rem 1.1rem;
+  position: relative; overflow: hidden;
+}
+.dc::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.dc.cg::before { background: var(--lime); }
+.dc.cv::before { background: var(--peach); }
+.dc.cr::before { background: var(--pink); }
+.dc.cm::before { background: linear-gradient(90deg, var(--peach) 0%, var(--pink) 50%, var(--lime) 100%); }
+
+.dc .ico { font-size: 1.4rem; margin-bottom: 0.45rem; display: block; }
+.dlabel {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 3px;
+}
+.dval {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; color: var(--white); line-height: 1.2;
+}
+.dval small {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.76rem; font-weight: 500; color: var(--muted);
+  display: block; margin-top: 2px;
+}
+
+/* RSVP */
+.rsvp-wrap {
+  max-width: 560px; margin: 2.5rem auto 0;
+  padding: 0 1.25rem;
+  opacity: 0; animation: rise 0.5s 0.5s ease forwards;
+  position: relative; z-index: 1;
+}
+.sh { text-align: center; margin-bottom: 1.4rem; }
+.sh h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 0.2rem; }
+.sh p { font-size: 13px; color: var(--muted); }
+
+.fbox {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+}
+
+.fg { margin-bottom: 1.1rem; }
+.fg label {
+  display: block;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 6px;
+}
+.fg input {
+  width: 100%;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; color: var(--white); outline: none;
+  transition: border-color 0.15s;
+}
+.fg input:focus { border-color: var(--lime); }
+.fg input::placeholder { color: rgba(255,245,238,0.25); }
+
+.choices { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 1.1rem; }
+.ch {
+  background: rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 13px 6px 11px;
+  text-align: center; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600; color: var(--muted);
+  transition: all 0.15s; line-height: 1.35;
+}
+.ch .ci { font-size: 20px; display: block; margin-bottom: 4px; }
+.ch:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
+.ch.sy { border-color: var(--lime);  background: rgba(200,240,117,0.12); color: var(--lime); }
+.ch.sm { border-color: var(--peach); background: rgba(255,176,133,0.12); color: var(--peach); }
+.ch.sn { border-color: var(--pink);  background: rgba(255,143,171,0.12); color: var(--pink); }
+
+.gobtn {
+  width: 100%; padding: 15px;
+  background: var(--lime); color: #1A2800;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.1rem; border: none; border-radius: 12px;
+  cursor: pointer; transition: background 0.15s, transform 0.1s;
+}
+.gobtn:hover { background: var(--lime2); }
+.gobtn:active { transform: scale(0.98); }
+
+.toast {
+  display: none; text-align: center;
+  padding: 11px 14px; border-radius: 10px;
+  font-size: 14px; font-weight: 600;
+  margin-bottom: 1rem; animation: pop 0.25s ease;
+}
+.toast.show { display: block; }
+.ty { background: rgba(200,240,117,0.15); border: 1px solid var(--lime);  color: var(--lime); }
+.tm { background: rgba(255,176,133,0.12); border: 1px solid var(--peach); color: var(--peach); }
+.tn { background: rgba(255,143,171,0.12); border: 1px solid var(--pink);  color: var(--pink); }
+
+/* GUESTS */
+.gw {
+  max-width: 560px; margin: 2.5rem auto 5rem;
+  padding: 0 1.25rem;
+  opacity: 0; animation: rise 0.5s 0.6s ease forwards;
+  position: relative; z-index: 1;
+}
+.tally { display: flex; gap: 10px; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 13px; font-weight: 600; border: 1px solid;
+}
+.chip.cg { border-color: var(--lime);  color: var(--lime);  background: rgba(200,240,117,0.1); }
+.chip.cm { border-color: var(--peach); color: var(--peach); background: rgba(255,176,133,0.1); }
+.chip.cn { border-color: var(--pink);  color: var(--pink);  background: rgba(255,143,171,0.1); }
+.cn2 { font-family: 'Playfair Display', serif; font-size: 1rem; }
+
+.gi {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 11px 14px;
+  margin-bottom: 8px; animation: rise 0.2s ease both;
+}
+.gn { font-size: 14px; font-weight: 600; }
+.gnote { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.gb {
+  font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 100px;
+}
+.gby { background: rgba(200,240,117,0.15); color: var(--lime); }
+.gbm { background: rgba(255,176,133,0.15); color: var(--peach); }
+.gbn { background: rgba(255,143,171,0.15); color: var(--pink); }
+
+.empty { text-align: center; color: var(--muted); font-size: 14px; padding: 2rem; font-style: italic; }
+
+footer {
+  text-align: center; padding: 1.5rem;
+  font-size: 12px; color: var(--muted);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  position: relative; z-index: 1;
+}
+
+#cfx { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop {
+  from { transform: scale(0.93); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 420px) {
+  .hero h1 { font-size: 3rem; }
+  .dval { font-size: 0.98rem; }
+}
+</style>
+</head>
+<body>
+<canvas id="cfx"></canvas>
+
+<!-- Floating orbs -->
+<div class="orbs-header" id="orbs"></div>
+
+<!-- Stars row -->
+<div class="stars-row">
+  <div class="star-line"></div>
+  <div class="star pk"></div>
+  <div class="star"></div>
+  <div class="star lg"></div>
+  <div class="star"></div>
+  <div class="star pk"></div>
+  <div class="star-line"></div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="gems">
+    <div class="gem" style="background:var(--pink)"></div>
+    <div class="gem" style="background:var(--peach)"></div>
+    <div class="gem" style="background:var(--lime);width:14px;height:14px"></div>
+    <div class="gem" style="background:var(--peach)"></div>
+    <div class="gem" style="background:var(--pink)"></div>
+  </div>
+  <p class="eyebrow">🎓 You're officially invited</p>
+  <h1>
+    <span class="h-gold">Celebración</span><br>
+    de<br>
+    <span class="h-green">Graduación</span>
+  </h1>
+  <p class="hero-sub">I finally did it — I graduated from college! 🎉<br>Come join me for dinner &amp; drinks to celebrate on May 9th!</p>
+</section>
+
+<!-- Tape -->
+<div class="tape">
+  <span class="tape-inner">
+    🌮 May 9th &nbsp;·&nbsp; 8:00 PM &nbsp;·&nbsp; El Mazatlan · Mankato MN &nbsp;·&nbsp; 🎓 Graduation Dinner &nbsp;·&nbsp; 🍹 Drinks &amp; Vibes &nbsp;·&nbsp; 🌮 May 9th &nbsp;·&nbsp; 8:00 PM &nbsp;·&nbsp; El Mazatlan · Mankato MN &nbsp;·&nbsp; 🎓 Graduation Dinner &nbsp;·&nbsp; 🍹 Drinks &amp; Vibes &nbsp;·&nbsp;
+  </span>
+</div>
+
+<!-- Details -->
+<div class="details">
+  <div class="dc cg">
+    <span class="ico">📅</span>
+    <div class="dlabel">When</div>
+    <div class="dval">May 9th<small>Friday · 8:00 PM</small></div>
+  </div>
+  <div class="dc cv">
+    <span class="ico">📍</span>
+    <div class="dlabel">Where</div>
+    <div class="dval">El Mazatlan<small>1525 Tullamore St, Mankato MN</small></div>
+  </div>
+  <div class="dc cr">
+    <span class="ico">🎓</span>
+    <div class="dlabel">Occasion</div>
+    <div class="dval">College Grad!<small>Finally done 😭🎉</small></div>
+  </div>
+  <div class="dc cm">
+    <span class="ico">🍹</span>
+    <div class="dlabel">Vibe</div>
+    <div class="dval">Tacos &amp; Drinks<small>Come hungry &amp; ready to party</small></div>
+  </div>
+</div>
+
+<!-- RSVP -->
+<form action="https://formspree.io/f/xzdyvrkd" method="POST" class="rsvp-wrap">
+  <div class="sh">
+    <h2>RSVP 🙋</h2>
+    <p>Let me know so I can get the reservation right!</p>
+  </div>
+  <div class="fbox">
+    <div class="toast" id="toast"></div>
+    <div class="fg">
+      <label for="nf">Your name</label>
+      <input type="text" id="nf" name="name" placeholder="First and last name" maxlength="50" required>
+    </div>
+    <div class="fg">
+      <label>Can you make it?</label>
+      <div class="choices">
+        <input type="hidden" name="status" id="statusField" required>
+        <button type="button" class="ch" id="by" onclick="pick('yes')"><span class="ci">🥳</span>I'm in!</button>
+        <button type="button" class="ch" id="bm" onclick="pick('maybe')"><span class="ci">🤔</span>Maybe...</button>
+        <button type="button" class="ch" id="bn" onclick="pick('no')"><span class="ci">😢</span>Can't go</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label for="mf">Message (optional)</label>
+      <input type="text" id="mf" name="message" placeholder="Hype message, dietary stuff, questions..." maxlength="100">
+    </div>
+    <button type="submit" class="gobtn">Send My RSVP 🎉</button>
+  </div>
+</form>
+  </div>
+</div>
+
+<!-- Guests -->
+<div class="gw">
+  <div class="sh"><h2>Who's coming 👀</h2></div>
+  <div class="tally">
+    <div class="chip cg"><span class="cn2" id="cy">0</span> going</div>
+    <div class="chip cm"><span class="cn2" id="cmc">0</span> maybe</div>
+    <div class="chip cn"><span class="cn2" id="cn">0</span> can't make it</div>
+  </div>
+  <div id="gl"></div>
+</div>
+
+<footer>🌮 Hecho con amor &nbsp;·&nbsp; See you May 9th! 🎓</footer>
+
+<script>
+// floating orbs
+(function(){
+  const wrap = document.getElementById('orbs');
+  const orbs = [
+    {w:80,h:80,top:'-20px',left:'5%', bg:'rgba(200,240,117,0.35)', dur:'6s'},
+    {w:60,h:60,top:'10px', left:'22%',bg:'rgba(255,176,133,0.4)',  dur:'8s'},
+    {w:100,h:100,top:'-30px',left:'42%',bg:'rgba(255,143,171,0.3)',dur:'7s'},
+    {w:55,h:55,top:'5px', left:'62%',bg:'rgba(200,240,117,0.3)',  dur:'9s'},
+    {w:75,h:75,top:'-15px',left:'78%',bg:'rgba(255,176,133,0.35)',dur:'6.5s'},
+    {w:45,h:45,top:'15px',left:'92%',bg:'rgba(255,143,171,0.4)',  dur:'7.5s'},
+  ];
+  orbs.forEach(o => {
+    const d = document.createElement('div');
+    d.className = 'orb';
+    d.style.cssText = `width:${o.w}px;height:${o.h}px;top:${o.top};left:${o.left};background:${o.bg};animation-duration:${o.dur};`;
+    wrap.appendChild(d);
+  });
+})();
+
+let sel=null;
+let guests=JSON.parse(localStorage.getItem('grad_rsvp3')||'[]');
+
+function pick(v){
+  sel=v;
+  document.getElementById('by').className='ch'+(v==='yes'?' sy':'');
+  document.getElementById('bm').className='ch'+(v==='maybe'?' sm':'');
+  document.getElementById('bn').className='ch'+(v==='no'?' sn':'');
+}
+
+function doSubmit(){
+  const name=document.getElementById('nf').value.trim();
+  const note=document.getElementById('mf').value.trim();
+  const ni=document.getElementById('nf');
+  if(!name){ni.style.borderColor='var(--red)';ni.focus();setTimeout(()=>ni.style.borderColor='',1800);return;}
+  if(!sel){
+    const c=document.querySelector('.choices');
+    c.style.outline='2px solid var(--red)';c.style.borderRadius='14px';
+    setTimeout(()=>{c.style.outline='';},1800);return;
+  }
+  const idx=guests.findIndex(g=>g.name.toLowerCase()===name.toLowerCase());
+  const e={name,status:sel,note};
+  if(idx>=0)guests[idx]=e;else guests.push(e);
+  localStorage.setItem('grad_rsvp3',JSON.stringify(guests));
+
+  document.getElementById('nf').value='';
+  document.getElementById('mf').value='';
+  const wasYes=sel==='yes';
+  const st=sel;
+  pick(null);
+
+  const msgs={yes:"🎉 YES! Can't wait to see you May 9th!!",maybe:"🤞 Fingers crossed you can make it!",no:"😢 Sad to miss you — thanks for letting me know!"};
+  const cls={yes:'ty',maybe:'tm',no:'tn'};
+  const t=document.getElementById('toast');
+  t.textContent=msgs[st];
+  t.className='toast '+cls[st]+' show';
+  setTimeout(()=>t.classList.remove('show'),4000);
+
+  if(wasYes)boom();
+  render();
+}
+
+function render(){
+  const yes=guests.filter(g=>g.status==='yes').length;
+  const maybe=guests.filter(g=>g.status==='maybe').length;
+  const no=guests.filter(g=>g.status==='no').length;
+  document.getElementById('cy').textContent=yes;
+  document.getElementById('cmc').textContent=maybe;
+  document.getElementById('cn').textContent=no;
+  const gl=document.getElementById('gl');
+  if(!guests.length){gl.innerHTML='<p class="empty">No RSVPs yet — be the first! 🌮</p>';return;}
+  const lab={yes:'Going 🥳',maybe:'Maybe 🤔',no:"Can't make it 😢"};
+  const cls={yes:'gby',maybe:'gbm',no:'gbn'};
+  gl.innerHTML=[...guests].reverse().map(g=>`
+    <div class="gi">
+      <div>
+        <div class="gn">${esc(g.name)}</div>
+        ${g.note?`<div class="gnote">${esc(g.note)}</div>`:''}
+      </div>
+      <span class="gb ${cls[g.status]}">${lab[g.status]}</span>
+    </div>`).join('');
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+const cv=document.getElementById('cfx');
+const cx=cv.getContext('2d');
+let pts=[];
+function rsz(){cv.width=innerWidth;cv.height=innerHeight;}
+addEventListener('resize',rsz);rsz();
+
+function boom(){
+  const cols=['#C8F075','#FFB085','#FF8FAB','#FFF5EE','#A8D855','#FFDDB0','#E8B4C8'];
+  for(let i=0;i<160;i++){
+    pts.push({
+      x:Math.random()*cv.width,y:-10,
+      vx:(Math.random()-0.5)*5,vy:Math.random()*7+2,
+      r:Math.random()*6+3,
+      color:cols[Math.floor(Math.random()*cols.length)],
+      angle:0,spin:(Math.random()-0.5)*0.22,life:1
+    });
+  }
+  if(pts.length===160)anim();
+}
+
+function anim(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  pts=pts.filter(p=>{
+    p.vy+=0.13;p.x+=p.vx;p.y+=p.vy;p.angle+=p.spin;p.life-=0.008;
+    if(p.life<=0||p.y>cv.height+20)return false;
+    cx.save();cx.globalAlpha=p.life;
+    cx.translate(p.x,p.y);cx.rotate(p.angle);
+    cx.fillStyle=p.color;
+    cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.7);
+    cx.restore();return true;
+  });
+  if(pts.length)requestAnimationFrame(anim);
+  else cx.clearRect(0,0,cv.width,cv.height);
+}
+
+render();
+</script>
+</body>
+</html>
