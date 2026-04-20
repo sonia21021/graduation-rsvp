@@ -506,29 +506,9 @@ function doSubmit(){
   setTimeout(()=>t.classList.remove('show'),4000);
 
   if(wasYes)boom();
-  render();
+ // render();
 }
 
-function render(){
-  const yes=guests.filter(g=>g.status==='yes').length;
-  const maybe=guests.filter(g=>g.status==='maybe').length;
-  const no=guests.filter(g=>g.status==='no').length;
-  document.getElementById('cy').textContent=yes;
-  document.getElementById('cmc').textContent=maybe;
-  document.getElementById('cn').textContent=no;
-  const gl=document.getElementById('gl');
-  if(!guests.length){gl.innerHTML='<p class="empty">No RSVPs yet — be the first! 🌮</p>';return;}
-  const lab={yes:'Going 🥳',maybe:'Maybe 🤔',no:"Can't make it 😢"};
-  const cls={yes:'gby',maybe:'gbm',no:'gbn'};
-  gl.innerHTML=[...guests].reverse().map(g=>`
-    <div class="gi">
-      <div>
-        <div class="gn">${esc(g.name)}</div>
-        ${g.note?`<div class="gnote">${esc(g.note)}</div>`:''}
-      </div>
-      <span class="gb ${cls[g.status]}">${lab[g.status]}</span>
-    </div>`).join('');
-}
 
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
