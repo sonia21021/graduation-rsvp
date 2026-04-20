@@ -5,7 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Celebración de Graduación 🎓</title>
 <style>
-/* ... KEEP YOUR ORIGINAL STYLES HERE ... */
+/* Re-adding your original styles here */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --bg: #2A1A12; --surface: #331F14; --lime: #C8F075; --lime2: #A8D855; --peach: #FFB085; --pink: #FF8FAB; --white: #FFF5EE; --muted: rgba(255,245,238,0.55); --radius: 16px; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--white); min-height: 100vh; }
+.rsvp-wrap { max-width: 560px; margin: 2.5rem auto 0; padding: 0 1.25rem; }
+.sh { text-align: center; margin-bottom: 1.4rem; }
+.fbox { background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius); padding: 1.75rem; }
+.fg { margin-bottom: 1.1rem; }
+.fg label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.fg input { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 11px 14px; color: var(--white); outline: none; }
+.choices { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 1.1rem; }
+.ch { background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 13px 6px 11px; text-align: center; cursor: pointer; color: var(--muted); }
+.ch.sy { border-color: var(--lime); background: rgba(200,240,117,0.12); color: var(--lime); }
+.ch.sm { border-color: var(--peach); background: rgba(255,176,133,0.12); color: var(--peach); }
+.ch.sn { border-color: var(--pink); background: rgba(255,143,171,0.12); color: var(--pink); }
+.gobtn { width: 100%; padding: 15px; background: var(--lime); color: #1A2800; border: none; border-radius: 12px; cursor: pointer; font-size: 1.1rem; }
 </style>
 </head>
 <body>
@@ -14,29 +29,21 @@
   <div class="rsvp-wrap">
     <div class="sh">
       <h2>RSVP 🙋</h2>
-      <p>Let me know so I can get the reservation right!</p>
     </div>
     <div class="fbox">
       <div class="fg">
         <label for="nf">Your name</label>
-        <input type="text" id="nf" name="name" placeholder="First and last name" maxlength="50" required>
+        <input type="text" id="nf" name="name" required>
       </div>
-      
       <div class="fg">
         <label>Can you make it?</label>
         <div class="choices">
           <input type="hidden" name="status" id="statusField" required>
-          <button type="button" class="ch" id="by" onclick="pick('yes')"><span class="ci">🥳</span>I'm in!</button>
-          <button type="button" class="ch" id="bm" onclick="pick('maybe')"><span class="ci">🤔</span>Maybe...</button>
-          <button type="button" class="ch" id="bn" onclick="pick('no')"><span class="ci">😢</span>Can't go</button>
+          <button type="button" class="ch" id="by" onclick="pick('yes')">I'm in!</button>
+          <button type="button" class="ch" id="bm" onclick="pick('maybe')">Maybe...</button>
+          <button type="button" class="ch" id="bn" onclick="pick('no')">Can't go</button>
         </div>
       </div>
-      
-      <div class="fg">
-        <label for="mf">Message (optional)</label>
-        <input type="text" id="mf" name="message" placeholder="Hype message, dietary stuff, etc." maxlength="100">
-      </div>
-      
       <button type="submit" class="gobtn">Send My RSVP 🎉</button>
     </div>
   </div>
@@ -50,6 +57,5 @@
     document.getElementById('bn').className = 'ch' + (v === 'no' ? ' sn' : '');
   }
 </script>
-
 </body>
 </html>
