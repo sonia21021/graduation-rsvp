@@ -30,7 +30,26 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--w
     <div class="sh">
       <h2>RSVP 🙋</h2>
     </div>
-    <div class="fbox">
+    <div class="<form action="https://formspree.io/f/xzdyvrkd" method="POST">
+  <div class="fg">
+    <label for="nf">Your name</label>
+    <input type="text" id="nf" name="name" placeholder="First and last name" maxlength="50" required>
+  </div>
+  <div class="fg">
+    <label>Can you make it?</label>
+    <div class="choices">
+      <input type="hidden" name="status" id="statusField" required>
+      <button type="button" class="ch" id="by" onclick="pick('yes')"><span class="ci">🥳</span>I'm in!</button>
+      <button type="button" class="ch" id="bm" onclick="pick('maybe')"><span class="ci">🤔</span>Maybe...</button>
+      <button type="button" class="ch" id="bn" onclick="pick('no')"><span class="ci">😢</span>Can't go</button>
+    </div>
+  </div>
+  <div class="fg">
+    <label for="mf">Message (optional)</label>
+    <input type="text" id="mf" name="message" placeholder="Hype message, dietary stuff..." maxlength="100">
+  </div>
+  <button type="submit" class="gobtn">Send My RSVP 🎉</button>
+</form>>
       <div class="fg">
         <label for="nf">Your name</label>
         <input type="text" id="nf" name="name" required>
